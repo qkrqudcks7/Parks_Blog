@@ -12,5 +12,4 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     Page<Board> findAll(Pageable pageable);
 
     List<Board> findByCategoryContainingOrTextContainingOrSubjectContainingOrShortDescriptionContaining(String category, String text, String subject, String shortDescription);
-
 }
