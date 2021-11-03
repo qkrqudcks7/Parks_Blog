@@ -5,8 +5,7 @@ import com.example.blog.domain.Board;
 import com.example.blog.exception.CustomException;
 import com.example.blog.exception.CustomExceptionStatus;
 import com.example.blog.payload.request.BoardRequest;
-import com.example.blog.payload.response.BoardResponse;
-import com.example.blog.payload.response.PageBoardResponse;
+import com.example.blog.payload.response.*;
 import com.example.blog.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -119,5 +118,42 @@ public class BoardService {
         Collections.reverse(collect);
 
         return new ResponseEntity<>(collect, HttpStatus.OK);
+    }
+
+    public ResponseEntity<PageAdminBoardResponse> findAllAdminBoard(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Board> all = boardRepository.findAll(pageable);
+
+        List<AdminBoardResponse> collect = all.stream().map(
+                board -> new AdminBoardResponse(board.getId(), board.getSubject(), board.getShortDescription(), board.getImage(), board.getViewCount(), board.getStringComments())
+        ).collect(Collectors.toList());
+        Collections.reverse(collect);
+
+        int total = boardRepository.findAll().size();
+
+        PageAdminBoardResponse result = new PageAdminBoardResponse(total,collect);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    public ResponseEntity<TotalResponse> getTotal() {
+        List<Board> all = boardRepository.findAll();
+        int board = 0;
+        int comment = 0;
+        int scrap = 0;
+        int view = 0;
+
+        for (Board i : all) {
+            board++;
+            comment+= i.getStringComments().size();
+
+            if (i.getUrl() != null) {
+                scrap++;
+            }
+            view+=i.getViewCount();
+        }
+        TotalResponse totalResponse = new TotalResponse(board,comment,scrap,view);
+
+        return new ResponseEntity<>(totalResponse,HttpStatus.OK);
     }
 }

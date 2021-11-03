@@ -16,16 +16,18 @@
           <h6>{{i.subject}}</h6>
           <div class="like">
             <span>
-              <i class="fa fa-heart"></i> {{i.shortDescription}}
+              {{i.shortDescription}}
             </span>
             <span>
-              <i class="fa fa-share-alt"></i> 조회수 {{i.viewCount}}
+              조회수 {{i.viewCount}}
             </span>
           </div>
         </div>
       </div>
     </div>
-    <pagination :records="board.total" v-model="page" :per-page="size" @paginate="findAll" />
+    <div class="page">
+      <pagination :records="board.total" v-model="page" :per-page="size" @paginate="findAll" />
+    </div>
   </section>
   </body>
 </template>
@@ -166,6 +168,10 @@ section {
 }
 .like span {
   font-size: 13px;
+}
+.page {
+  display: flex;
+  justify-content: center;
 }
 @media (max-width: 768px) {
   section {

@@ -4,6 +4,7 @@ import Home from '../components/home'
 import AddBoard from '../components/addBoard'
 import Board from '../components/board'
 import ModifyBoard from '../components/modifyBoard'
+import Admin from '../components/admin'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/modifyBoard:id',
       name: 'ModifyBoard',
       component: ModifyBoard
+    },
+    {
+      path: '/admin',
+      name: "Admin",
+      component: Admin
     }
   ]
 })

@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -59,6 +60,10 @@ public class Board {
 
     public void plusTracBackCount() {
         this.trackBackCount++;
+    }
+
+    public List<String> getStringComments() {
+        return this.comments.stream().map(Comments::getComment).collect(Collectors.toList());
     }
 
     public void modifyBoard(BoardRequest boardRequest) {

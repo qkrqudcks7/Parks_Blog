@@ -132,13 +132,12 @@ nav {
     padding: 10px;
   }
   .gnb {
-    flex-direction: column;
     text-align: center;
     border-top: 1px solid rgba(0,0,0,0.1);
   }
   .gnb li a{
     display: block;
-    padding: 8px;
+    padding: 6px;
     margin: 0px;
   }
 }
