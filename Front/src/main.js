@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import VeeValidate from 'vee-validate'
 import Notification from 'vue-notification'
+import Pagination from 'vue-pagination-2'
 import CKEditor from 'ckeditor4-vue'
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -14,6 +15,7 @@ Vue.use(VeeValidate)
 Vue.use(Notification)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(Pagination)
 Vue.use(CKEditor)
 Vue.config.productionTip = false
 

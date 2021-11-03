@@ -3,6 +3,7 @@ package com.example.blog.controller;
 import com.example.blog.exception.ValidationExceptionProvider;
 import com.example.blog.payload.request.BoardRequest;
 import com.example.blog.payload.response.BoardResponse;
+import com.example.blog.payload.response.PageBoardResponse;
 import com.example.blog.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,9 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/allboard")
-    public ResponseEntity<List<BoardResponse>> getAllBoard() {
-        return boardService.findAll();
+    public ResponseEntity<PageBoardResponse> getAllBoard(@RequestParam(name = "page",required = false, defaultValue = "0") Integer page,
+                                                         @RequestParam(name = "size",required = false, defaultValue = "9") Integer size) {
+        return boardService.findAll(page,size);
     }
 
     @PostMapping("/board")

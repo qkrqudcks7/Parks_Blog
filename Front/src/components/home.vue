@@ -9,7 +9,7 @@
       <button @click="search">검색</button>
     </div>
     <div class="items">
-      <div class="item" v-for="(i,index) in board" :key="index">
+      <div class="item" v-for="(i,index) in board.boardResponses" :key="index">
         <img v-if="i.image === null" src="../assets/temp.png" alt="" @click="goBoard(i.id)">
         <img v-else :src="i.image" alt="" @click="goBoard(i.id)">
         <div class="desc">
@@ -25,24 +25,31 @@
         </div>
       </div>
     </div>
+    <pagination :records="board.total" v-model="page" :per-page="size" @paginate="findAll" />
   </section>
   </body>
 </template>
 
 <script>
 import board from '../API/board'
+import Pagination from 'vue-pagination-2'
 
 export default {
   name: 'Home',
   data () {
     return {
       board: [],
-      word: ''
+      word: '',
+      page: 1,
+      size: 9
     }
+  },
+  components: {
+    Pagination
   },
   methods: {
     async findAll () {
-      const response = await board.getAllBoard()
+      const response = await board.getAllBoard(this.page-1,this.size)
       if (response.status === 200) {
         this.board = response.data
       }

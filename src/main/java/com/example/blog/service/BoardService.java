@@ -6,9 +6,13 @@ import com.example.blog.exception.CustomException;
 import com.example.blog.exception.CustomExceptionStatus;
 import com.example.blog.payload.request.BoardRequest;
 import com.example.blog.payload.response.BoardResponse;
+import com.example.blog.payload.response.PageBoardResponse;
 import com.example.blog.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -63,14 +67,19 @@ public class BoardService {
         return ResponseEntity.ok("블로그 생성 완료");
     }
 
-    public ResponseEntity<List<BoardResponse>> findAll() {
-        List<Board> all = boardRepository.findAll();
+    public ResponseEntity<PageBoardResponse> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Board> all = boardRepository.findAll(pageable);
         List<BoardResponse> collect = all.stream().map(
                 board -> new BoardResponse(board.getId(),board.getSubject(), board.getShortDescription(), board.getText(), board.getImage(), board.getCategory(), board.getLocalDateTime(), board.getViewCount(), board.getTrackBackCount()
                 )).collect(Collectors.toList());
         Collections.reverse(collect);
 
-        return new ResponseEntity<>(collect, HttpStatus.OK);
+        int total = boardRepository.findAll().size();
+
+        PageBoardResponse result = new PageBoardResponse(total,collect);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @Transactional

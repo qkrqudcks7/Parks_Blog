@@ -3,8 +3,8 @@ import axios from 'axios'
 const URL = 'http://localhost:8080'
 
 export default {
-    getAllBoard () {
-        return axios.get(URL + '/allboard')
+    getAllBoard (page,size) {
+        return axios.get(URL + `/allboard?page=${page}&size=${size}`)
     },
     addBoard (formData) {
         return axios.post(URL + '/board', formData)
