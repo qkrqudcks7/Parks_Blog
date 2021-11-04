@@ -156,4 +156,14 @@ public class BoardService {
 
         return new ResponseEntity<>(totalResponse,HttpStatus.OK);
     }
+
+    public ResponseEntity<List<BoardResponse>> findByViewCount() {
+        List<Board> result = boardRepository.findAllByOrderByViewCount();
+        List<BoardResponse> collect = result.stream().map(
+                board -> new BoardResponse(board.getId(),board.getSubject(), board.getShortDescription(), board.getText(), board.getImage(), board.getCategory(), board.getLocalDateTime(), board.getViewCount(), board.getTrackBackCount()
+                )).collect(Collectors.toList());
+        Collections.reverse(collect);
+
+        return new ResponseEntity<>(collect, HttpStatus.OK);
+    }
 }

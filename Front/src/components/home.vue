@@ -2,11 +2,25 @@
   <body>
   <section>
     <div class="name">
-      <span>Park's</span> 블로그에 오신 여러분 환영합니다.
+      <span>Park's</span> 블로그에 오신 여러분 환영합니다. 🎉
     </div>
     <div class="search-box">
       <input type="text" placeholder="검색하세요" v-model="word" @keyup.enter="search">
       <button @click="search">검색</button>
+    </div>
+    <div class="topView">
+      <div class="name">
+        <span>🔥 Top 3 Park's feed</span>
+      </div>
+      <div class="feed">
+        <div class="one" @click="goBoard(viewBoard[0].id)">📌 {{viewBoard[0].subject}} [조회수 {{viewBoard[0].viewCount}}]</div>
+        <div class="two" @click="goBoard(viewBoard[1].id)">📌 {{viewBoard[1].subject}} [조회수 {{viewBoard[1].viewCount}}]</div>
+        <div class="three" @click="goBoard(viewBoard[2].id)">📌 {{viewBoard[2].subject}} [조회수 {{viewBoard[2].viewCount}}]</div>
+      </div>
+    </div>
+
+    <div class="name">
+      <span>🗃️ Park's Blog</span>
     </div>
     <div class="items">
       <div class="item" v-for="(i,index) in board.boardResponses" :key="index">
@@ -41,6 +55,7 @@ export default {
   data () {
     return {
       board: [],
+      viewBoard: [],
       word: '',
       page: 1,
       size: 9
@@ -65,10 +80,17 @@ export default {
           this.board = response.data
         }
       })
+    },
+    async getByViewCount () {
+      const response = await board.getViewCount()
+      if (response.status === 200) {
+        this.viewBoard = response.data
+      }
     }
   },
   mounted() {
     this.findAll()
+    this.getByViewCount()
   }
 }
 </script>
@@ -125,6 +147,21 @@ section {
   border-radius: 6px;
   font-size: 20px;
   box-shadow: 5px 5px 20px black;
+}
+.topView .name {
+  margin: 60px 0;
+  text-align: left;
+  font-size: 32px;
+}
+.topView .feed {
+  color: #0a58ca;
+  cursor: pointer;
+}
+.topView .one {
+  margin-bottom: 15px;
+}
+.topView .two {
+  margin-bottom: 15px;
 }
 .items {
   display: flex;

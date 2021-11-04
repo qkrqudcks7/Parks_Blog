@@ -63,4 +63,9 @@ public class BoardController {
     public ResponseEntity<List<BoardResponse>> search(@PathVariable("keyword") String keyword) {
         return boardService.searchBoard(keyword);
     }
+
+    @GetMapping("/viewcount")
+    public ResponseEntity<List<BoardResponse>> findByViewCount() {
+        return boardService.findByViewCount();
+    }
 }

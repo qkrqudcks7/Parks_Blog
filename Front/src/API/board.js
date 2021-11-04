@@ -20,5 +20,8 @@ export default {
     },
     search(keyword) {
       return axios.get(URL + `/search/${keyword}`)
+    },
+    getViewCount () {
+      return axios.get(URL + '/viewcount')
     }
 }
