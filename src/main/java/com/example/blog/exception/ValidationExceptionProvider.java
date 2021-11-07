@@ -7,7 +7,7 @@ public class ValidationExceptionProvider {
     public static void throwValidError(Errors errors) {
         String errorCode = errors.getFieldError().getCode();
         String errorTarget = errors.getFieldError().getField();
-        throw new CustomException(getExceptionStatus(errorCode,errorTarget));
+        throw new CustomException(ValidationExceptionProvider.getExceptionStatus(errorCode,errorTarget));
     }
 
     public static CustomExceptionStatus getExceptionStatus(String code, String target) {

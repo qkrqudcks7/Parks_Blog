@@ -53,15 +53,17 @@ public class BoardService {
                 .viewCount(0L).build();
         boardRepository.save(board);
 
-        // 트랙백 uri 파싱
-        String uri = boardRequest.getUrl();
-        String [] temp = uri.split("board");
-        Long id = Long.valueOf(temp[1]);
+        if (boardRequest.getUrl() != null) {
+            // 트랙백 uri 파싱
+            String uri = boardRequest.getUrl();
+            String [] temp = uri.split("board");
+            Long id = Long.valueOf(temp[1]);
 
-        // 트랙백 count up
-        Board trackBackBoard = boardRepository.findById(id)
-                .orElseThrow(() -> new CustomException(CustomExceptionStatus.BOARD_ID_NOT_FOUND));
-        trackBackBoard.plusTracBackCount();
+            // 트랙백 count up
+            Board trackBackBoard = boardRepository.findById(id)
+                    .orElseThrow(() -> new CustomException(CustomExceptionStatus.BOARD_ID_NOT_FOUND));
+            trackBackBoard.plusTracBackCount();
+        }
 
         return ResponseEntity.ok("블로그 생성 완료");
     }

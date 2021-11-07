@@ -6,6 +6,7 @@ import com.example.blog.payload.response.BoardResponse;
 import com.example.blog.payload.response.PageBoardResponse;
 import com.example.blog.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
